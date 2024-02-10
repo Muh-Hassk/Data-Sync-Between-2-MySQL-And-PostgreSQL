@@ -69,5 +69,5 @@ def mirror_data():
 # Continuously run the mirroring script
 while True:
     mirror_data()
-    # Sleep for a specified interval before fetching new data again
+    # Sleep for a specified time before fetching new data again
     time.sleep(20)  # Sleep for 20 seconds before fetching new data
