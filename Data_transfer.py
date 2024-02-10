@@ -37,6 +37,17 @@ def mirror_data():
                 print("Data Inserted")
                 print(row[0])
 
+        # Delete records in PostgreSQL that do not exist in MySQL
+        pg_cursor.execute("SELECT id FROM shaguftable")
+        pg_records = pg_cursor.fetchall()
+        pg_ids = [record[0] for record in pg_records]
+        mysql_ids = [record[0] for record in data_to_mirror]
+        for pg_id in pg_ids:
+            if pg_id not in mysql_ids:
+                pg_cursor.execute("DELETE FROM shaguftable WHERE id = %s", (pg_id,))
+                print("Data Deleted")
+                print(pg_id)
+
         # Commit changes
         pg_conn.commit()
         print("Data mirroring completed successfully.")
